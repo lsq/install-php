@@ -94,12 +94,17 @@ try {
   Copy-Item -LiteralPath $oldDir\$($xml.info.php.php_ini) -Destination "$bldDir" -Force -ErrorAction SilentlyContinue
   move-Item -LiteralPath .\$($xml.info.php.filename) -Destination "$bldDir" -Force -ErrorAction SilentlyContinue
   move-Item -LiteralPath .\$($xml.info.vc_redist_x64.filename) -Destination "$bldDir" -Force -ErrorAction SilentlyContinue
-  $xml.Save("$bldDir\Config.xml")
+  $configPath =   "$bldDir" + "\Config.xml"
+  $pi =  $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($configPath)
+  Write-Output "[INFO] $configPath -- $pi  -- $(([System.IO.FileInfo]"$($bldDir)\Config.xml").FullName)"
+  $xml.Save($pi)
   7z a -mx9 $bldPkg "$bldDir\*"
   Remove-Item -Path $oldDir -Recurse -Force -ErrorAction SilentlyContinue
   Remove-Item -Path $bldDir -Recurse -Force -ErrorAction SilentlyContinue
   
   }
 catch {
-  
+  Write-Output "[ERROR] Extraction of the build package failed. Script terminated."
+  Write-Output "[ERROR] $($_.exception.message)"
+  break
 }
