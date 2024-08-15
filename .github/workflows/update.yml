@@ -32,12 +32,27 @@ jobs:
           powershell .\update-zip.ps1
 
       #https://stackoverflow.com/questions/64868918/how-to-download-artifact-release-asset-in-another-workflow
-      - uses: actions/download-artifact@v4
+      #- uses: actions/download-artifact@v4
+      #  with:
+      #    name: php.zip
+      #    github-token: ${{ secrets.GITHUB_TOKEN }} # token with actions:read permissions on target repo
+      #    repository: lsq/lanzouyunapi
+      #    run-id: 10398898260
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
-          name: php.zip
-          github-token: ${{ secrets.GITHUB_TOKEN }} # token with actions:read permissions on target repo
-          repository: lsq/lanzouyunapi
-          run-id: 10398898260
+          php-version: '8.3'
+          extensions: mbstring, intl, curl, apcu
+          ini-values: post_max_size=256M, max_execution_time=180
+          coverage: xdebug
+          tools: php-cs-fixer, phpunit
+          
+      - name: pack php installed files
+        shell: powershell
+        run: |
+          $tf = ".\php-8.3-nts-x64.zip"
+          if (Test-Path $tf) { Remove-Item -Path $tf  -Force -ErrorAction SilentlyContinue}
+          7z a -mx9 $tf c:\tools\php
 
       - uses: int128/update-generated-files-action@v2
         with:
