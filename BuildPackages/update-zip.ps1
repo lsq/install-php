@@ -108,7 +108,7 @@ try {
   Write-Output "[INFO] $configPath -- $pi  -- $(([System.IO.FileInfo]"$($bldDir)\Config.xml").FullName)"
   $xml.Save($pi)
   $rootPath = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath("..\Config.xml")
-  $xml.Save($pi)
+  $xml.Save($rootPath)
   7z a -mx9 $bldPkg "$bldDir\*"
   Remove-Item -Path $oldDir -Recurse -Force -ErrorAction SilentlyContinue
   Remove-Item -Path $bldDir -Recurse -Force -ErrorAction SilentlyContinue
