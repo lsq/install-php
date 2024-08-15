@@ -310,6 +310,15 @@ fnCheckPSAdmin
     Write-Output "[INFO] $($xml.info.php.filename) present."
     }
 
+    # Check Ca File Exists
+    if(!(Test-Path $bldDir\cacert.pem))){
+    Write-Output "[ERROR] cacert.pem was not found in $bldDir. Script terminated."
+    Break
+    }
+    else{
+    Write-Output "[INFO] cacert.pem present."
+    }
+
     # Verify PHP Hash
     try{
     $hash = (Get-FileHash -Path $bldDir\$($xml.info.php.filename) -Algorithm SHA256 -ErrorAction SilentlyContinue).hash
@@ -462,7 +471,8 @@ fnCheckPSAdmin
     # Copy PHP.ini
     try{
     Write-Output "[INFO] Copying php.ini file to $($xml.info.php.install_directory)"
-    Copy-Item -LiteralPath $bldDir\$($xml.info.php.php_ini) -Destination "$($xml.info.php.install_directory)\php.ini" -Force -ErrorAction SilentlyContinue
+    #Copy-Item -LiteralPath $bldDir\$($xml.info.php.php_ini) -Destination "$($xml.info.php.install_directory)\php.ini" -Force -ErrorAction SilentlyContinue
+    Copy-Item -LiteralPath .\php.ini -Destination "$($xml.info.php.install_directory)\php.ini" -Force -ErrorAction SilentlyContinue
     Write-Output "[INFO] Copied php.ini file to $($xml.info.php.install_directory)"
     }
     catch{
@@ -531,6 +541,19 @@ $b = "; Modified on $date by $user using $script`r`nextension_dir = `"$($xml.inf
     Write-Output "[ERROR] $($_.exception.message)"
     Break
     }
+
+    # Copy cacert.pem 
+    try{
+    Write-Output "[INFO] Copying $bldDir\cacert.pem to $($xml.info.php.install_directory)\ssl"
+    if (!(Test-Path -path "$($xml.info.php.install_directory)\ssl")) { New-Item "$($xml.info.php.install_directory)\ssl" -type directory -Force -ErrorAction Stop | Out-Null }
+    Copy-Item -LiteralPath "$($bldDir)\cacert.pem" -Destination "$($xml.info.php.install_directory)\ssl" -Force -ErrorAction SilentlyContinue
+    Write-Output "[INFO] Copied $bldDir\$($xml.info.wincache.filename) to $($xml.info.php.install_directory)"
+    }
+    catch{
+    Write-Output "[ERROR] Unable to copy $($xml.info.wincache.filename) to $($xml.info.php.install_directory)\Ext. Script terminated."
+    Write-Output "[ERROR] $($_.exception.message)"
+    Break
+    }   
 #endregion Install&ConfigurePHP
 
 #region ConfigureIIS
