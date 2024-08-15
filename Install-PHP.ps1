@@ -311,7 +311,7 @@ fnCheckPSAdmin
     }
 
     # Check Ca File Exists
-    if(!(Test-Path $bldDir\cacert.pem))){
+    if(!(Test-Path $bldDir\cacert.pem)){
     Write-Output "[ERROR] cacert.pem was not found in $bldDir. Script terminated."
     Break
     }
