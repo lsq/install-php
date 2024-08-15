@@ -82,6 +82,14 @@ $xml.info.server
 
 # wincache
 
+# ssl CA certificates extracted from Mozilla
+$CaName = "cacert.pem"
+$uCa = "https://curl.se/ca/cacert.pem"
+$uCaHash = "https://curl.se/ca/cacert.pem.sha256"
+if (Test-Path -path $CaName) {
+    Remove-Item -Path $CaName  -Force -ErrorAction SilentlyContinue
+}
+invoke-WebRequest -uri $uCa -OutFile $CaName
 
 $bldPkg = ".\Build$($latestVer)x64Win2022.zip"
 try {
@@ -94,9 +102,12 @@ try {
   Copy-Item -LiteralPath $oldDir\$($xml.info.php.php_ini) -Destination "$bldDir" -Force -ErrorAction SilentlyContinue
   move-Item -LiteralPath .\$($xml.info.php.filename) -Destination "$bldDir" -Force -ErrorAction SilentlyContinue
   move-Item -LiteralPath .\$($xml.info.vc_redist_x64.filename) -Destination "$bldDir" -Force -ErrorAction SilentlyContinue
+  move-Item -LiteralPath .\$($CaName) -Destination "$bldDir" -Force -ErrorAction SilentlyContinue
   $configPath =   "$bldDir" + "\Config.xml"
   $pi =  $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($configPath)
   Write-Output "[INFO] $configPath -- $pi  -- $(([System.IO.FileInfo]"$($bldDir)\Config.xml").FullName)"
+  $xml.Save($pi)
+  $rootPath = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath("..\Config.xml")
   $xml.Save($pi)
   7z a -mx9 $bldPkg "$bldDir\*"
   Remove-Item -Path $oldDir -Recurse -Force -ErrorAction SilentlyContinue
