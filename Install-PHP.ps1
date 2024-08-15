@@ -682,6 +682,7 @@ fnCreateDir ($($xml.info.iis.site_path) + "\" + $($xml.info.iis.site_name))
     Write-Output "[INFO] Restarting IIS Site $($xml.info.iis.site_name)."
     Stop-Website -Name $($xml.info.iis.site_name) -ErrorAction SilentlyContinue
     Start-Website -Name $($xml.info.iis.site_name) -ErrorAction SilentlyContinue
+    net start w3svc
     Write-Output "[INFO] Restarted IIS Site $($xml.info.iis.site_name)."
     }
     catch{
@@ -717,8 +718,10 @@ fnCreateDir ($($xml.info.iis.site_path) + "\" + $($xml.info.iis.site_name))
         foreach($subKey in $subKeys){
 
             # Set to Yes if display name is in the registry (Add/remove programs)
-            if((($reg.OpenSubKey($key+"\\"+$subKey).getValue('DisplayName')) -replace ",", ";") -eq $xml.info.vc_redist_x64.display_name){
+            if((($reg.OpenSubKey($key+"\\"+$subKey).getValue('DisplayName')) -replace ",", ";") -like "*$((($xml.info.vc_redist_x64.display_name -replace $xml.info.server.supported_version, '2022') -replace ' - [\d.]+',''))*"){
+            #if((($reg.OpenSubKey($key+"\\"+$subKey).getValue('DisplayName')) -replace ",", ";") -eq $xml.info.vc_redist_x64.display_name){
             $isInstalled = "Yes"
+            Write-Output "$(($reg.OpenSubKey($key + "\\" + $subKey).getvalue("DisplayName")) -replace ",",";")"
             }
 
         }
