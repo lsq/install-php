@@ -292,7 +292,7 @@ fnCheckPSAdmin
         }
         else{
         Write-Output "[ERROR] Operarting System is not supported. Script terminated."
-        Break
+#Break
         }
 
     }
