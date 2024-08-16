@@ -1,0 +1,60 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  test-update:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      # Runs a single command using the runners shell
+      #- name: Run a one-line script
+      #  run: echo Hello, world!
+
+      # Runs a set of commands using the runners shell
+      - name: Test update files
+        shell: powershell
+        run: |
+          $foldp = ".\BuildPackages"
+          $latestFile = Get-ChildItem -Path $foldp -File | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+          .\Install-PHP.ps1 -bldPkg $latestFile.FullName
+          copy php.ini c:\tools\php\ -Force
+          git clone https://github.com/lsq/lanzouyunapi
+          cd lanzouyunapi
+          pwd
+          dir
+          powershell Install-lanzouyun-api.ps1 ..\Config.xml
+  test-UseAction:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test Action update files
+        shell: powershell
+        run: |
+          unzip php-8.3-nts-x64.zip -d c:\tools\
+          #copy php.ini c:\tools\php\ -Force
+          git clone https://github.com/lsq/lanzouyunapi
+          cd lanzouyunapi
+          pwd
+          dir
+          powershell Install-lanzouyun-api.ps1 ..\Config.xml
+          
+          
