@@ -71,7 +71,7 @@ jobs:
             lsq            
           # Create a draft pull request (optional)
           # This is useful to prevent CODEOWNERS from receiving a review request.
-          draft: true
+          #draft: true
           # Add labels to the pull request (optional)
           labels: |
             pack php installed files
