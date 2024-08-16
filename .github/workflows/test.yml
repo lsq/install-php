@@ -41,7 +41,7 @@ jobs:
           cd lanzouyunapi
           pwd
           dir
-          powershell Install-lanzouyun-api.ps1 ..\Config.xml
+          powershell .\Install-lanzouyun-api.ps1 ..\Config.xml
   test-UseAction:
     runs-on: windows-latest
     steps:
@@ -55,6 +55,6 @@ jobs:
           cd lanzouyunapi
           pwd
           dir
-          powershell Install-lanzouyun-api.ps1 ..\Config.xml
+          powershell .\Install-lanzouyun-api.ps1 ..\Config.xml
           
           
