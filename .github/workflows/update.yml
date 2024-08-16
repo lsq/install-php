@@ -64,6 +64,19 @@ jobs:
 
       - uses: int128/update-generated-files-action@v2
         with:
+          title: Regenerate php zip files
+          body: Updated by `pack php installed files`
+          # Request reviewers for the pull request (optional)
+          reviewers: |
+            lsq            
+          # Create a draft pull request (optional)
+          # This is useful to prevent CODEOWNERS from receiving a review request.
+          draft: true
+          # Add labels to the pull request (optional)
+          labels: |
+            pack php installed files
+          # Set a custom message to the new commit (optional)
+          commit-message: 'Update: php installe files'
           token: ${{ secrets.GITHUB_TOKEN }} 
       # update-generated-files-action fails when it creates a pull request
       - if: always() && steps.update-generated-files.outputs.pull-request-number != ''
