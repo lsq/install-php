@@ -21,11 +21,11 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: windows-latest
-    permissions:
+    #permissions:
       # required to push a commit
-      contents: write
+      #contents: write
       # required to create a pull request
-      pull-requests: write
+      #pull-requests: write
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -64,19 +64,19 @@ jobs:
 
       - uses: int128/update-generated-files-action@v2
         with:
-          title: Regenerate php zip files
-          body: Updated by `pack php installed files`
+          #title: Regenerate php zip files
+          #body: Updated by `pack php installed files`
           # Request reviewers for the pull request (optional)
-          reviewers: |
+          #reviewers: |
             lsq            
           # Create a draft pull request (optional)
           # This is useful to prevent CODEOWNERS from receiving a review request.
           #draft: true
           # Add labels to the pull request (optional)
-          labels: |
+          #labels: |
             pack php installed files
           # Set a custom message to the new commit (optional)
-          commit-message: 'Update: php installe files'
+          #commit-message: 'Update: php installe files'
           token: ${{ secrets.GITHUB_TOKEN }} 
       # update-generated-files-action fails when it creates a pull request
       - if: always() && steps.update-generated-files.outputs.pull-request-number != ''
