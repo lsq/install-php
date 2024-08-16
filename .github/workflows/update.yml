@@ -68,13 +68,13 @@ jobs:
           #body: Updated by `pack php installed files`
           # Request reviewers for the pull request (optional)
           #reviewers: |
-            lsq            
+          #  lsq            
           # Create a draft pull request (optional)
           # This is useful to prevent CODEOWNERS from receiving a review request.
           #draft: true
           # Add labels to the pull request (optional)
           #labels: |
-            pack php installed files
+          #  pack php installed files
           # Set a custom message to the new commit (optional)
           #commit-message: 'Update: php installe files'
           token: ${{ secrets.GITHUB_TOKEN }} 
