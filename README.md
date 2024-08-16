@@ -16,7 +16,7 @@ a index.php file preconfigured with phpinfo().
  #### 方法二
 
 ```powershell
-.\Install-PHP.ps1 -bldPkg "C:\Build\Build8.3x642022.zip"
+.\Install-PHP.ps1 -bldPkg ".\BuildPackages\Build8.3x64Win2022.zip"
 copy php.ini c:\tools\php
 ```
 
