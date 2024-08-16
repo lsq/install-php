@@ -1,4 +1,5 @@
-![GitHub Actions Status](https://github.com/lsq/install-php/workflows/test/badge.svg)![GitHub Actions Status](https://github.com/lsq/install-php/workflows/update/badge.svg)
+[![Test update](https://github.com/lsq/install-php/actions/workflows/test.yml/badge.svg)](https://github.com/lsq/install-php/actions/workflows/test.yml)
+[![Auto Update](https://github.com/lsq/install-php/actions/workflows/update.yml/badge.svg)](https://github.com/lsq/install-php/actions/workflows/update.yml)
 # Install-PHP
 
 A PowerShell script that installs the Web Server, Web CGI & IIS management tools roles, installs and configures PHP including the wincache dll, configures IIS for PHP and creates
