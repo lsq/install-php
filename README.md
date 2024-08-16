@@ -133,10 +133,10 @@ These parameters are all contained within the Config.xml file (located in the Bu
 
 | Parameter | Default Setting | Description |
 | :--- | :--- | :--- |
-| version | 14.24.28127.4 | This is the version of Microsoft Visual C++ 2015-2022 Redistributable to be installed. |
+| version | 14.40.33810.0 | This is the version of Microsoft Visual C++ 2015-2022 Redistributable to be installed. |
 | filename | vc_redist.x64.exe | This is the name of the Visual C++ file downloaded from https://download.visualstudio.microsoft.com/download/pr/3b070396-b7fb-4eee-aa8b-102a23c3e4f4/40EA2955391C9EAE3E35619C4C24B5AAF3D17AEAA6D09424EE9672AA9372AEED/VC_redist.x64.exe |
 | sha256 | 40EA2955391C9EAE3E35619C4C24B5AAF3D17AEAA6D09424EE9672AA9372AEED | This is the SHA256 file checksum of the vc_redist.x64.exe file. |
-| display_name | Microsoft Visual C++ 2015-2022 Redistributable (x64) - 14.24.28127 | This is the display name of Visual C++ as seen in the Add/Remove programs applet. This display name will be checked against the server to make sure its installed. |
+| display_name | Microsoft Visual C++ 2015-2022 Redistributable (x64) - 14.40.33810.0 | This is the display name of Visual C++ as seen in the Add/Remove programs applet. This display name will be checked against the server to make sure its installed. |
 
 
 
