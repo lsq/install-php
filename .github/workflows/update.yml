@@ -21,6 +21,11 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: windows-latest
+    permissions:
+      # required to push a commit
+      contents: write
+      # required to create a pull request
+      pull-requests: write
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -59,4 +64,7 @@ jobs:
 
       - uses: int128/update-generated-files-action@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}  
+          token: ${{ secrets.GITHUB_TOKEN }} 
+      # update-generated-files-action fails when it creates a pull request
+      - if: always() && steps.update-generated-files.outputs.pull-request-number != ''
+        run: gh pr ${{ steps.update-generated-files.outputs.pull-request-number }} # something to manipulate the pull request
